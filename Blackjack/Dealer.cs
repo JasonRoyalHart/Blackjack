@@ -35,10 +35,22 @@ namespace Blackjack
             Console.WriteLine("The dealer deals itself a {0} of {1}",dealerCard.name, dealerCard.suit);
         }
 
+        public void CheckForBlackjack(Game game)
+        {
+            foreach (Player player in game.playerList)
+            {
+                if (player.AddCards() == 21)
+                {
+                    Console.WriteLine("{0} was dealt blackjack and automatically wins!",player.Name);
+                    player.staying = true;
+                }
+            }
+        }
         public void DealCards(Deck deck, Game game)
         {
             DealOut(deck, game);
             DealOut(deck, game);
+            CheckForBlackjack(game);
 
         }
 

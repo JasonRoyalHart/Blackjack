@@ -22,7 +22,7 @@ namespace Blackjack
         }
         public virtual void DisplayHand()
         {
-            Console.WriteLine("{0}'s hand:", Name);
+            Console.WriteLine("\n{0}'s hand:", Name);
             foreach (Card myCard in hand)
             {
                 Console.WriteLine(myCard.name + " of " + myCard.suit);
@@ -36,7 +36,7 @@ namespace Blackjack
             Card dealtCard = deck.cards[0];
             hand.Add(dealtCard);
             deck.cards.RemoveAt(0);
-            Console.WriteLine("You are dealt a {0} of {1}", dealtCard.name, dealtCard.suit);
+            Console.WriteLine("\nYou are dealt a {0} of {1}", dealtCard.name, dealtCard.suit);
         }
         public void Stay()
         {

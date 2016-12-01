@@ -12,10 +12,55 @@ namespace Blackjack
         public List<Player> playerList = new List<Player>();
         public bool gameOver;
 
+        public void StartGame()
+        {
+
+
+            Welcome();
+            GetPlayers();
+            MakePlayers();
+            Dealer dealer = new Dealer();
+            Deck orderedDeck = new Deck();
+            orderedDeck.InitializeDeck();
+            orderedDeck.Shuffle();
+            dealer.DealCards(orderedDeck, this);
+            GameLoop(dealer, orderedDeck);
+            DealerLoop(dealer, orderedDeck);
+            CompareScores(dealer, this);
+            PlayAgain();
+
+        }
+
+        public void PlayAgain()
+        { 
+            Console.WriteLine("Do you want to play again? (y/n)");
+
+            string choice = Console.ReadLine();
+            if (choice == "y")
+            {
+                Console.Clear();
+                Reset();
+                StartGame();
+            }
+            else if (choice == "n")
+            {
+                Environment.Exit(0);
+            }
+            else
+            {
+                PlayAgain();
+            }
+        }
+ 
+        public void Reset()
+        {
+            playerList.Clear();
+        }
+
         public void Welcome()
         {
             Console.WriteLine("Welcome to Blackjack!");
-            Console.WriteLine("A team one production.");
+            Console.WriteLine("A Team One production.");
             Rules rules = new Rules();
             rules.DisplayRules();
         }
@@ -91,10 +136,9 @@ namespace Blackjack
 
                 foreach (Player currentPlayer in playerList)
                 {
-                    bool stay = false;
                     if (!currentPlayer.lost)
                     {
-                        while (!stay)
+                        while (!currentPlayer.staying)
                             {
                             currentPlayer.DisplayHand();
                             Console.WriteLine("{0}, your current score is {1}, choose hit or stay.", currentPlayer.Name, currentPlayer.AddCards());
@@ -105,7 +149,6 @@ namespace Blackjack
                                     currentPlayer.Hit(this, dealer, deck);
                                     break;
                                 case "stay":
-                                    stay = true;
                                     currentPlayer.Stay();
                                     break;
                                 default:
@@ -116,7 +159,7 @@ namespace Blackjack
                             bool busted = currentPlayer.CheckForBust(this);
                             if (busted)
                                 {
-                                    stay = true;
+                                    currentPlayer.staying = true;
                                 }
                             allStay = true;
                    }
