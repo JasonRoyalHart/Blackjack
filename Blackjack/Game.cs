@@ -141,7 +141,7 @@ namespace Blackjack
                         while (!currentPlayer.staying)
                             {
                             currentPlayer.DisplayHand();
-                            Console.WriteLine("{0}, your current score is {1}, choose hit or stay.", currentPlayer.Name, currentPlayer.AddCards());
+                            Console.WriteLine("{0}, your current score is {1}, choose look, hit, or stay.", currentPlayer.Name, currentPlayer.AddCards());
                             string playerChoice = Console.ReadLine().ToLower();
                             switch (playerChoice)
                             {
@@ -150,6 +150,9 @@ namespace Blackjack
                                     break;
                                 case "stay":
                                     currentPlayer.Stay();
+                                    break;
+                                case "look":
+                                    dealer.DisplayHiddenHand();
                                     break;
                                 default:
                                     Console.WriteLine("Please enter hit or stay.");
