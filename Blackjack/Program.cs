@@ -12,6 +12,7 @@ namespace Blackjack
         {
 
             Game game = new Game();
+            Dealer dealer = new Dealer();
             game.Welcome();
             game.GetPlayers();
             game.MakePlayers();
@@ -19,11 +20,20 @@ namespace Blackjack
             Deck deck = new Deck();
             orderedDeck.InitializeDeck();
             orderedDeck.Shuffle();
-            orderedDeck.DisplayDeck();
-            Console.WriteLine(orderedDeck.cards.Count());
+//            orderedDeck.DisplayDeck();
+//            Console.WriteLine(orderedDeck.cards.Count());
+
+            dealer.DealCards(orderedDeck, game);
+            //            Player myPlayer = new Player();
+            //            foreach (Player myPlayer in game.playerList)
+            //            {
+            //                myPlayer.DisplayHand();
+            //            }
+
+            //            dealer.DisplayHand();
+
+            game.GameLoop(dealer, orderedDeck);
             Console.ReadKey();
-
-
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Blackjack
     class Game
     {
         public int numberOfPlayers;
+        public List<Player> playerList = new List<Player>();
+        public bool lost;
 
         public void Welcome()
         {
@@ -49,12 +51,50 @@ namespace Blackjack
 
         public void MakePlayers()
         {
-            Player[] PlayerArray = new Player[numberOfPlayers];
             for (int i = 0; i < numberOfPlayers; i++)
             {
-                PlayerArray[i] = new Player();
+                Player newPlayer = new Player();
+                playerList.Add(newPlayer);
                 Console.WriteLine("Player {0}, what is your name?",i+1);
-                PlayerArray[i].Name = Console.ReadLine();
+                playerList[i].Name = Console.ReadLine();
+            }
+        }
+
+
+        public void GameLoop(Dealer dealer, Deck deck)
+        {
+            bool gameOver = false;
+            while (!gameOver)
+            {
+                foreach (Player currentPlayer in playerList)
+                {
+                    bool chosen = false;
+                    while (!chosen)
+                    {
+                        if (!currentPlayer.lost)
+                        {
+                            currentPlayer.DisplayHand();
+                            Console.WriteLine("{0}, choose hit or stay.", currentPlayer.Name);
+                            string playerChoice = Console.ReadLine().ToLower();
+                            switch (playerChoice)
+                            {
+                                case "hit":
+                                    chosen = true;
+                                    currentPlayer.Hit(this, dealer, deck);
+                                    break;
+                                case "stay":
+                                    chosen = true;
+                                    currentPlayer.Stay();
+                                    break;
+                                default:
+                                    Console.WriteLine("Please enter hit or stay.");
+                                    break;
+
+                            }
+                            bool busted = currentPlayer.CheckForBust(this);
+                        }
+                    }
+                }
             }
         }
 

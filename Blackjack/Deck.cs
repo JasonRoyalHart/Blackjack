@@ -94,9 +94,8 @@ namespace Blackjack
                 cards.RemoveAt(selectedCard);
             }
             cards = shuffledCards;
-
-
         }
+
         public void DisplayDeck()
         {
             foreach (Card card in cards)
