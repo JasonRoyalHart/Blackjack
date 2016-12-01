@@ -8,16 +8,17 @@ namespace Blackjack
 {
     class Deck
     {
-        public List<Card> cards;
+        public List<Card> cards = new List<Card>();
         public int numberOfCards;
 
         public Deck()
         {
+
             numberOfCards = 52;
+            
         }
         public void InitializeDeck()
         {
-                   
             for (int value = 0; value < 13; value++)
             {
                 for (int suit = 0; suit < 4; suit++)
@@ -38,15 +39,35 @@ namespace Blackjack
                             theCard.suit = "Spades";
                             break;
                     }
+
+                    if (value > 0 && value < 10)
+                    {
+                        theCard.name = (value+2).ToString();
+                    }
+                    else if (value == 10) {
+                        theCard.name = "Jack";
+                    }
+                    else if (value == 11)
+                    {
+                        theCard.name = "Queen";
+                    }
+                    else if (value == 1)
+                    {
+                        theCard.name = "King";
+                    }
+                    else if (value == 1)
+                    {
+                        theCard.name = "Ace";
+                    }
                     if (value > 10)
                     {
                         theCard.value = 10;
                     }
                     else
                     {
-                        theCard.value = value;
+                        theCard.value = value + 1;
                     }
-                    if (value == 1)
+                    if (theCard.value == 1)
                     {
                         theCard.alternateValue = 11;
                     }
@@ -55,26 +76,9 @@ namespace Blackjack
                         theCard.alternateValue = 0;
                     }
 
-                    if (value > 1 && value < 10)
-                    {
-                        theCard.name = value.ToString();
-                    }
-                    else if (value == 11) {
-                        theCard.name = "Jack";
-                    }
-                    else if (value == 12)
-                    {
-                        theCard.name = "Queen";
-                    }
-                    else if (value == 13)
-                    {
-                        theCard.name = "King";
-                    }
-                    else if (value == 1)
-                    {
-                        theCard.name = "Ace";
-                    }
-                    }
+                    cards.Add(theCard);
+                }
+            
                 }
 
 
@@ -85,6 +89,13 @@ namespace Blackjack
             Random cardShuffler = new Random();
 
 
+        }
+        public void DisplayDeck()
+        {
+            foreach (Card card in cards)
+            {
+                Console.WriteLine("{0} {1} {2}", card.name, card.suit, card.value);
+            }
         }
     }
 
