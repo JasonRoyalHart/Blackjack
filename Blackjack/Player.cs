@@ -37,7 +37,7 @@ namespace Blackjack
             hand.Add(dealtCard);
             deck.cards.RemoveAt(0);
             Console.WriteLine("\nYou are dealt a {0} of {1}", dealtCard.name, dealtCard.suit);
-        }
+         }
         public void Stay()
         {
             Console.WriteLine("You stay.");
