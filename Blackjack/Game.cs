@@ -10,7 +10,7 @@ namespace Blackjack
     {
         public int numberOfPlayers;
         public List<Player> playerList = new List<Player>();
-        public bool lost;
+        public bool gameOver;
 
         public void Welcome()
         {
@@ -60,30 +60,52 @@ namespace Blackjack
             }
         }
 
-
+        public void DealerLoop(Dealer dealer, Deck deck)
+        {
+            bool dealerHitting = true;
+            while (dealerHitting)
+            {
+                if (dealer.AddCards() < 17)
+                {
+                    dealer.DealSelf(deck);
+                    bool dealerBusted = dealer.CheckForBust(this);
+                    if (dealerBusted)
+                    {
+                        Console.WriteLine("The dealer busted!");
+                        dealerHitting = false;
+                        gameOver = true;
+                    }
+                }
+                else
+                {
+                    dealerHitting = false;
+                }
+                dealer.DisplayHand();
+            }
+        }
         public void GameLoop(Dealer dealer, Deck deck)
         {
-            bool gameOver = false;
-            while (!gameOver)
+            bool allStay = false;
+            while (!allStay)
             {
+
                 foreach (Player currentPlayer in playerList)
                 {
-                    bool chosen = false;
-                    while (!chosen)
+                    bool stay = false;
+                    if (!currentPlayer.lost)
                     {
-                        if (!currentPlayer.lost)
-                        {
+                        while (!stay)
+                            {
                             currentPlayer.DisplayHand();
-                            Console.WriteLine("{0}, choose hit or stay.", currentPlayer.Name);
+                            Console.WriteLine("{0}, your current score is {1}, choose hit or stay.", currentPlayer.Name, currentPlayer.AddCards());
                             string playerChoice = Console.ReadLine().ToLower();
                             switch (playerChoice)
                             {
                                 case "hit":
-                                    chosen = true;
                                     currentPlayer.Hit(this, dealer, deck);
                                     break;
                                 case "stay":
-                                    chosen = true;
+                                    stay = true;
                                     currentPlayer.Stay();
                                     break;
                                 default:
@@ -92,6 +114,61 @@ namespace Blackjack
 
                             }
                             bool busted = currentPlayer.CheckForBust(this);
+                            if (busted)
+                                {
+                                    stay = true;
+                                }
+                            allStay = true;
+                   }
+                    }
+                }
+            }
+        }
+        public void CompareScores(Dealer dealer, Game game)
+        {
+            int dealerScore = dealer.AddCards();
+            Console.WriteLine("The dealer's final score is {0}",dealerScore);
+            if (dealerScore > 21)
+            {
+                Console.WriteLine("The dealer busted.");
+                foreach (Player player in game.playerList)
+                {
+                    if (!player.lost)
+                    {
+                        Console.WriteLine("{0} wins with a score of {1}!",player.Name, player.AddCards());
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} busted and loses.",player.Name);
+                    }
+                }
+            }
+            else
+            {
+                foreach (Player scorePlayer in game.playerList)
+                {
+                    int playerScore = scorePlayer.AddCards();
+                    Console.WriteLine("{0}'s final score is {1}", scorePlayer.Name, playerScore);
+
+                    {
+                        if (playerScore <= 21)
+                        {
+                            if (playerScore > dealerScore)
+                            {
+                                Console.WriteLine("{0} wins!\n", scorePlayer.Name);
+                            }
+                            else if (playerScore == dealerScore)
+                            {
+                                Console.WriteLine("{0} pushes.\n", scorePlayer.Name);
+                            }
+                            else
+                            {
+                                Console.WriteLine("{0} loses.\n", scorePlayer.Name);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("{0} busted and lost.\n", scorePlayer.Name);
                         }
                     }
                 }

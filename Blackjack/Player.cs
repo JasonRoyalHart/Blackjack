@@ -12,6 +12,7 @@ namespace Blackjack
         public int Money;
         public bool turnOver;
         public bool lost;
+        public bool staying;
         public List<Card> hand = new List<Card>();
 
         public Player()
@@ -19,7 +20,7 @@ namespace Blackjack
             turnOver = false;
             lost = false;
         }
-        public void DisplayHand()
+        public virtual void DisplayHand()
         {
             Console.WriteLine("{0}'s hand:", Name);
             foreach (Card myCard in hand)
@@ -40,7 +41,7 @@ namespace Blackjack
         public void Stay()
         {
             Console.WriteLine("You stay.");
-            turnOver = true;
+            staying = true;
         }
 
         public int AddCards()
@@ -48,8 +49,22 @@ namespace Blackjack
             int total = 0;
             foreach (Card card in hand)
             {
-                total += card.value;
-            }
+                if (card.name == "Ace")
+                {
+                    if ((total+11) > 21)
+                    {
+                        total += card.alternateValue;
+                    }
+                    else
+                    {
+                        total += card.value;
+                    }
+                }
+                else
+                {
+                    total += card.value;
+                }
+                }
             return total;
         }
         public bool CheckForBust(Game game)

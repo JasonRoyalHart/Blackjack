@@ -33,6 +33,8 @@ namespace Blackjack
             //            dealer.DisplayHand();
 
             game.GameLoop(dealer, orderedDeck);
+            game.DealerLoop(dealer, orderedDeck);
+            game.CompareScores(dealer, game);
             Console.ReadKey();
         }
     }

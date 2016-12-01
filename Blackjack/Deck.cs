@@ -69,7 +69,8 @@ namespace Blackjack
                     }
                     if (theCard.value == 1)
                     {
-                        theCard.alternateValue = 11;
+                        theCard.alternateValue = 1;
+                        theCard.value = 11;
                     }
                     else
                     {
