@@ -9,5 +9,6 @@ namespace Blackjack
     class Player
     {
         public string Name;
+        public int Money;
     }
 }

@@ -15,6 +15,8 @@ namespace Blackjack
             game.Welcome();
             game.GetPlayers();
             game.MakePlayers();
+            Deck deck = new Blackjack.Deck();
+            deck.InitializeDeck();
             Console.ReadKey();
 
 

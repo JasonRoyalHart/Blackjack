@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Blackjack
 {
-    class Card
+    public class Card
     {
         public int value;
         public int alternateValue;
         public string suit;
         public string name;
+
 
     }
 }
