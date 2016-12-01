@@ -18,7 +18,9 @@ namespace Blackjack
             Deck orderedDeck = new Deck();
             Deck deck = new Deck();
             orderedDeck.InitializeDeck();
+            orderedDeck.Shuffle();
             orderedDeck.DisplayDeck();
+            Console.WriteLine(orderedDeck.cards.Count());
             Console.ReadKey();
 
 

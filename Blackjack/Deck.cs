@@ -42,7 +42,7 @@ namespace Blackjack
 
                     if (value > 0 && value < 10)
                     {
-                        theCard.name = (value+2).ToString();
+                        theCard.name = (value+1).ToString();
                     }
                     else if (value == 10) {
                         theCard.name = "Jack";
@@ -51,15 +51,15 @@ namespace Blackjack
                     {
                         theCard.name = "Queen";
                     }
-                    else if (value == 1)
+                    else if (value == 12)
                     {
                         theCard.name = "King";
                     }
-                    else if (value == 1)
+                    else if (value == 0)
                     {
                         theCard.name = "Ace";
                     }
-                    if (value > 10)
+                    if (value > 9)
                     {
                         theCard.value = 10;
                     }
@@ -85,8 +85,15 @@ namespace Blackjack
             }
         public void Shuffle()
         {
-            List<Card> cards = new List<Card>();
+            List<Card> shuffledCards = new List<Card>();
             Random cardShuffler = new Random();
+            for (int value = 0; value < 52; value++)
+            {
+                int selectedCard = cardShuffler.Next(0, cards.Count());
+                shuffledCards.Add(cards[selectedCard]);
+                cards.RemoveAt(selectedCard);
+            }
+            cards = shuffledCards;
 
 
         }
